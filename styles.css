@@ -10,11 +10,12 @@ html, body {
 }
 
 button {
-  background-color: white;
+  background-color: #F5F5F6;
   border: none;
-  color: #333;
-  box-shadow: 0 2px 5px #D0D0D0;
-  font-family: 'Roboto', sans-serif;
+  color: crimson;
+  font-size: 24px;
+  /*box-shadow: 0 2px 5px #D0D0D0;*/
+  font-family: 'Roboto black', sans-serif;
   margin: 2px;
 }
 
