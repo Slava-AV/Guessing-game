@@ -12,9 +12,15 @@
 	<div id="game">
 		<h3>Guessing game</h3>
 		<div id="keyboard">
-			<div v-for="row in letters" class="keyboard-row">
-				<letter-button v-for="letter in row" :letter="letter" :game-over="gameOver" :key="letter" @check="check(letter)"></letter-button>
+			<div class="keyboard-row">
+				<letter-button style="color:orangered" v-for="letter in letters[0]" :letter="letter" :game-over="gameOver" :key="letter" @check="check(letter)"></letter-button>
 			</div>
+            <div class="keyboard-row">
+                <letter-button style="color:dodgerblue" v-for="letter in letters[1]" :letter="letter" :game-over="gameOver" :key="letter" @check="check(letter)"></letter-button>
+            </div>
+            <div class="keyboard-row">
+                <letter-button style="color:steelblue" v-for="letter in letters[2]" :letter="letter" :game-over="gameOver" :key="letter" @check="check(letter)"></letter-button>
+            </div>
 		</div>
 	</div>
 

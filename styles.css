@@ -12,15 +12,14 @@ html, body {
 button {
   background-color: #F5F5F6;
   border: none;
-  color: crimson;
-  font-size: 24px;
+  font-size: 40px;
   /*box-shadow: 0 2px 5px #D0D0D0;*/
   font-family: 'Roboto black', sans-serif;
-  margin: 2px;
+  margin: 8px;
 }
 
 button:disabled {
-  color: #CCC;
+  color: #CCC !important;
 }
 
 /* II. helper classes applied by js */
@@ -56,6 +55,9 @@ button:disabled {
   height: 40px;
   width: 28px;
 }
+
+.button-yellow{color: yellow !important;
+  background-color: greenyellow;}
 
 /* E. game-option buttons */
 #buttons {
