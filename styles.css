@@ -14,7 +14,7 @@ button {
   border: none;
   font-size: 40px;
   /*box-shadow: 0 2px 5px #D0D0D0;*/
-  font-family: 'Roboto black', sans-serif;
+  font-family: 'Roboto', sans-serif;
   margin: 8px;
 }
 
@@ -71,4 +71,24 @@ button:disabled {
 .buttons-button {
   height: 25px;
   font-size: 1em;
+}
+
+#word {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 20px 0 18px 0;
+}
+
+.word-blankletter {
+  align-items: flex-end;
+  background-color: rgba(255, 152, 0, 0.24);
+  display: flex;
+  height: 50px;
+  font-size: 44px;
+  font-family: 'Roboto-medium', sans-serif;
+  color: crimson;
+  justify-content: center;
+  margin: 0 2px 2px 2px;
+  width: 40px;
 }

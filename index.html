@@ -11,15 +11,18 @@
 <body>
 	<div id="game">
 		<h3>Guessing game</h3>
+		<div id="word">
+			<div class="word-blankletter" v-for="letter in wordDivs" v-cloak>{{letter}}</div>
+		</div>
 		<div id="keyboard">
 			<div class="keyboard-row">
-				<letter-button style="color:orangered" v-for="letter in letters[0]" :letter="letter" :game-over="gameOver" :key="letter" @check="check(letter)"></letter-button>
+				<letter-button style="color:orangered" v-for="letter in letters[0]" :letter="letter" :game-over="gameOver" :key="letter" @check="check(letter)" v-cloak></letter-button>
 			</div>
             <div class="keyboard-row">
-                <letter-button style="color:dodgerblue" v-for="letter in letters[1]" :letter="letter" :game-over="gameOver" :key="letter" @check="check(letter)"></letter-button>
+                <letter-button style="color:dodgerblue" v-for="letter in letters[1]" :letter="letter" :game-over="gameOver" :key="letter" @check="check(letter)" v-cloak></letter-button>
             </div>
             <div class="keyboard-row">
-                <letter-button style="color:steelblue" v-for="letter in letters[2]" :letter="letter" :game-over="gameOver" :key="letter" @check="check(letter)"></letter-button>
+                <letter-button style="color:steelblue" v-for="letter in letters[2]" :letter="letter" :game-over="gameOver" :key="letter" @check="check(letter)" v-cloak></letter-button>
             </div>
 		</div>
 	</div>

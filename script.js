@@ -1,3 +1,8 @@
+// random integer helper function
+function randomInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 Vue.component("letter-button", {
     props: ["letter", "game-over"],
     template: "<button class='keyboard-row-letter' :id='letter' :disabled='disabled' @click='clicked()'>{{ letter }}</button>",
@@ -55,7 +60,48 @@ var game = new Vue({
         guesses: 0,
         gameOver: false,
         lose: false
+    },
+    methods: {
+        makeBlanks: function () {
+            for (var i = 0; i < this.currentWord.length; i++) {
+                this.wordDivs.push("");
+            }
+        },
+        check: function (letter) {
+            if (!this.gameover) {
+                var guessCorrect = false;
+                for (var i = 0; i < this.currentWord.length; i++) {
+                    if (letter == this.currentWord[i]) {
+                        Vue.set(this.wordDivs, i, letter);
+                        guessCorrect = true;
+                    }
+                }
+                if (!this.wordDivs.some(function (value) {
+                    return value == ""
+                })) {
+                    this.gameover = true;
+                    //Win message
+                }
+                if (!guessCorrect) {
+                    // loose message
+                }
 
-    }
+            }
+        },
+        restart: function () {
+            this.gameOver = false;
+            this.lose = false;
+            this.guesses = 0;
+            this.wordDivs.splice(0);
+            this.makeBlanks();
+            this.currentWord = this.words[randomInteger(0, this.words.length - 1)];
+        }
+    },
 
-})
+    mounted: function () {
+        this.gameOver = false;
+        this.currentWord = this.words[randomInteger(0, this.words.length - 1)];
+        this.makeBlanks();
+        }
+
+});
