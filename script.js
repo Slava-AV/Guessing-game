@@ -68,7 +68,7 @@ var game = new Vue({
             }
         },
         check: function (letter) {
-            if (!this.gameover) {
+            if (!this.gameOver) {
                 var guessCorrect = false;
                 for (var i = 0; i < this.currentWord.length; i++) {
                     if (letter == this.currentWord[i]) {
@@ -79,13 +79,13 @@ var game = new Vue({
                 if (!this.wordDivs.some(function (value) {
                     return value == ""
                 })) {
-                    this.gameover = true;
+                    this.gameOver = true;
                     //Win message
                 }
                 if (!guessCorrect) {
                     // loose message
+                    //this.gameOver = true;
                 }
-
             }
         },
         restart: function () {
