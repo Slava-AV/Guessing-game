@@ -57,7 +57,7 @@ var game = new Vue({
         // each element in this array is a letter in the word
         wordDivs: [],
         // to count the number of wrong guesses
-        guesses: 0,
+        guesses: 15,
         gameOver: false,
         lose: false
     },
@@ -69,7 +69,7 @@ var game = new Vue({
         },
         check: function (letter) {
             if (!this.gameOver) {
-                this.guesses++;
+                this.guesses--;
                 var guessCorrect = false;
                 for (var i = 0; i < this.currentWord.length; i++) {
                     if (letter == this.currentWord[i]) {
@@ -77,16 +77,25 @@ var game = new Vue({
                         guessCorrect = true;
                     }
                 }
+
                 if (!this.wordDivs.some(function (value) {
                     return value == ""
                 })) {
                     this.gameOver = true;
-                    //Win message
+                    //Win
                 }
-                if (!guessCorrect) {
+                else if (this.guesses==0) {
                     // loose message
-                    //this.gameOver = true;
+                    this.lose = true;
+                    this.gameOver = true;
+                    for (var i = 0; i < this.wordDivs.length; i++) {
+                        if (this.wordDivs[i] == "") {
+                            Vue.set(this.wordDivs, i, this.currentWord[i]);
+                        }
+                    }
+
                 }
+
             }
         },
         restart: function () {
@@ -100,6 +109,8 @@ var game = new Vue({
     },
 
     mounted: function () {
+        this.lose = false;
+        this.guesses = 20;
         this.gameOver = false;
         this.currentWord = this.words[randomInteger(0, this.words.length - 1)];
         this.makeBlanks();
