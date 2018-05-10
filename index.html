@@ -24,6 +24,7 @@
             <div class="keyboard-row">
                 <letter-button style="color:steelblue" v-for="letter in letters[2]" :letter="letter" :game-over="gameOver" :key="letter" @check="check(letter)" v-cloak></letter-button>
             </div>
+            <h1 v-if="!gameOver" v-cloak>Guesses: {{guesses}}</h1>
             <h1 v-if="gameOver" v-cloak>You won!!!</h1>
 		</div>
 

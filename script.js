@@ -69,6 +69,7 @@ var game = new Vue({
         },
         check: function (letter) {
             if (!this.gameOver) {
+                this.guesses++;
                 var guessCorrect = false;
                 for (var i = 0; i < this.currentWord.length; i++) {
                     if (letter == this.currentWord[i]) {
