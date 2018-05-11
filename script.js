@@ -4,22 +4,30 @@ function randomInteger(min, max) {
 }
 
 Vue.component("letter-button", {
-    props: ["letter", "game-over"],
+    props: ["letter", "game-over", "lose"],
     template: "<button class='keyboard-row-letter' :id='letter' :disabled='disabled' @click='clicked()'>{{ letter }}</button>",
-    data: function() {
+    data: function () {
         return {
             disabled: false
         };
     },
     methods: {
-        clicked: function() {
+        clicked: function () {
             this.disabled = true;
+            // setTimeout(() => { this.disabled = true }, 10000);
             this.$emit("check");
         }
     },
     watch: {
-        gameOver: function(newValue) {
+        gameOver: function (newValue) {
             this.disabled = newValue;
+        },
+        lose: function (newValue) {
+            for (var i = 0; i < this.wordDivs.length; i++) {
+                if (this.wordDivs[i] == "") {
+                    Vue.set(this.wordDivs, i, this.currentWord[i]);
+                }
+            }
         }
     }
 })
@@ -85,18 +93,24 @@ var game = new Vue({
                     //Win
                 }
                 else if (this.guesses==0) {
-                    // loose message
                     this.lose = true;
+                    // loose message
                     this.gameOver = true;
-                    for (var i = 0; i < this.wordDivs.length; i++) {
-                        if (this.wordDivs[i] == "") {
-                            Vue.set(this.wordDivs, i, this.currentWord[i]);
-                        }
-                    }
+                    //setTimeout(() => this.lose = true,3000);
+                    setTimeout( () => this.loseGame(),3000);
+
 
                 }
 
             }
+        },
+        loseGame: function() {
+            for (var i = 0; i < this.wordDivs.length; i++) {
+                if (this.wordDivs[i] == "") {
+                    Vue.set(this.wordDivs, i, this.currentWord[i]);
+                }
+                }
+
         },
         restart: function () {
             this.gameOver = false;
@@ -110,7 +124,7 @@ var game = new Vue({
 
     mounted: function () {
         this.lose = false;
-        this.guesses = 20;
+        this.guesses = 1;
         this.gameOver = false;
         this.currentWord = this.words[randomInteger(0, this.words.length - 1)];
         this.makeBlanks();
