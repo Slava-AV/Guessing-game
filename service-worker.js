@@ -2,12 +2,12 @@ const cacheName = 'ggame';
 
 const staticAssets = [
     './',
-    './script.js',
+    './index.html',
+    './scripts/app.js',
     './styles.css',
     './images/ladybug.gif',
     './images/sheeps.gif',
     'https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js',
- //   'http://fiaf.org/animation/2018/images/2018-02-minuscule-200-2.gif'
 ];
 
 self.addEventListener('install', async function () {
