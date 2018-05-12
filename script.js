@@ -1,3 +1,10 @@
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () =>
+        navigator.serviceWorker.register('./sw.js')
+            .then(registration => console.log('Service Worker registered'))
+            .catch(err => 'SW registration failed'));
+}
+
 // random integer helper function
 function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -22,13 +29,6 @@ Vue.component("letter-button", {
         gameOver: function (newValue) {
             this.disabled = newValue;
         },
-        lose: function (newValue) {
-            for (var i = 0; i < this.wordDivs.length; i++) {
-                if (this.wordDivs[i] == "") {
-                    Vue.set(this.wordDivs, i, this.currentWord[i]);
-                }
-            }
-        }
     }
 })
 
@@ -67,7 +67,9 @@ var game = new Vue({
         // to count the number of wrong guesses
         guesses: 15,
         gameOver: false,
-        lose: false
+        lose: false,
+        message: "",
+        image: ""
     },
     methods: {
         makeBlanks: function () {
@@ -90,14 +92,16 @@ var game = new Vue({
                     return value == ""
                 })) {
                     this.gameOver = true;
+                    this.message = "You win!!!";
                     //Win
                 }
                 else if (this.guesses==0) {
                     this.lose = true;
                     // loose message
                     this.gameOver = true;
-                    //setTimeout(() => this.lose = true,3000);
-                    setTimeout( () => this.loseGame(),3000);
+                    this.message = "You lose :(";
+                    this.image = "./images/sheeps.gif";
+                    setTimeout( () => this.loseGame(),2000);
 
 
                 }
@@ -124,10 +128,11 @@ var game = new Vue({
 
     mounted: function () {
         this.lose = false;
-        this.guesses = 1;
+        this.guesses = 10;
         this.gameOver = false;
         this.currentWord = this.words[randomInteger(0, this.words.length - 1)];
         this.makeBlanks();
+        this.image = "./images/ladybug.gif"
         }
 
 });
