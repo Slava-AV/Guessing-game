@@ -4,6 +4,8 @@ if ('serviceWorker' in navigator) {
             .then(registration => console.log('Service Worker registered'))
             .catch(err => 'SW registration failed'));
 }
+var wrong = zounds.load("sounds/wrong.ogg");
+    loose_song = zounds.load("sounds/loose.ogg");
 
 // random integer helper function
 function randomInteger(min, max) {
@@ -87,12 +89,14 @@ var game = new Vue({
                         guessCorrect = true;
                     }
                 }
+                if (!guessCorrect) {wrong.play();}
 
                 if (!this.wordDivs.some(function (value) {
                     return value == ""
                 })) {
                     this.gameOver = true;
                     this.message = "You win!!!";
+                    this.image = "./images/sheeps.gif";
                     //Win
                 }
                 else if (this.guesses==0) {
@@ -100,8 +104,8 @@ var game = new Vue({
                     // loose message
                     this.gameOver = true;
                     this.message = "You lose :(";
-                    this.image = "./images/sheeps.gif";
-                    setTimeout( () => this.loseGame(),2000);
+                    setTimeout( () =>loose_song.play(),500);
+                    setTimeout( () => this.loseGame(),3000);
 
 
                 }
@@ -116,23 +120,31 @@ var game = new Vue({
                 }
 
         },
+        playAgain: function() {
+            this.gameOver = true;
+            setTimeout( () => this.restart(),1000);
+        },
         restart: function () {
-            this.gameOver = false;
             this.lose = false;
-            this.guesses = 0;
-            this.wordDivs.splice(0);
-            this.makeBlanks();
+            this.guesses = 10;
+             this.wordDivs.splice(0);
             this.currentWord = this.words[randomInteger(0, this.words.length - 1)];
+            this.makeBlanks();
+            this.gameOver = false;
+            this.image = "./images/ladybug.gif";
+            this.message = "Guess my word:"
+
         }
     },
 
     mounted: function () {
-        this.lose = false;
-        this.guesses = 10;
-        this.gameOver = false;
-        this.currentWord = this.words[randomInteger(0, this.words.length - 1)];
-        this.makeBlanks();
-        this.image = "./images/ladybug.gif"
+        // this.lose = false;
+        // this.guesses = 10;
+        // this.gameOver = false;
+        // this.currentWord = this.words[randomInteger(0, this.words.length - 1)];
+        // this.makeBlanks();
+        // this.image = "./images/ladybug.gif"
+        this.restart()
         }
 
 });

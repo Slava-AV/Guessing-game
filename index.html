@@ -2,16 +2,19 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="manifest" href="/akimguessinggame/manifest.json">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+    <script src="scripts/zounds.min.js"></script>
     <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
 	<div id="game">
-        <img v-bind:src="image" />
-		<h3>Guess my word:</h3>
+        <img style="margin-top: 10px;" v-bind:src="image" />
+		<h3>{{ message }}</h3>
 		<div id="word">
 			<div class="word-blankletter" v-for="letter in wordDivs" v-cloak>{{letter}}</div>
 		</div>
@@ -25,11 +28,11 @@
             <div class="keyboard-row">
                 <letter-button style="color:steelblue" v-for="letter in letters[2]" :letter="letter" :game-over="gameOver" :key="letter" @check="check(letter)" v-cloak></letter-button>
             </div>
-            <h1 v-if="!gameOver" v-cloak>Guesses: {{guesses}}</h1>
-            <h1 v-if="gameOver" v-cloak>{{ message }}</h1>
+            <h3 v-if="!gameOver" v-cloak>Guesses: {{guesses}}</h3>
+            <!--<h1 v-if="gameOver" v-cloak>{{ message }}</h1>-->
 		</div>
-
-	</div>
+            <button id="playagain" class="buttons-button" @click="playAgain">Restart</button>
+        </div>
 
 <!--<script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>-->
 <script type="text/javascript" src="scripts/app.js"></script>
