@@ -8,6 +8,7 @@ var correct = zounds.load("sounds/correct.ogg");
     wrong = zounds.load("sounds/wrong.ogg");
     loose_song = zounds.load("sounds/loose.ogg");
     win_song = zounds.load("sounds/win.ogg");
+    click = zounds.load("sounds/click.ogg");
 
 // random integer helper function
 function randomInteger(min, max) {
@@ -38,32 +39,59 @@ Vue.component("letter-button", {
 
 var game = new Vue({
     el: '#game',
-    data: {letters: [
+    data: {lettersEn: [
             ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
             ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
             ["Z", "X", "C", "V", "B", "N", "M"]
         ],
-        // words to choose from
-        words: [
-            "BUTTERCUP",
-            "TANSY",
+        lettersRu:[
+        ["И", "Е", "Н", "А", "О", "Т", "Р", "С", "Л", "В"],
+        ["К", "П", "М", "У", "Д", "Я", "Ы", "Ь", "З", "Б", "Г"],
+        ["Б", "Г", "Й", "Ч", "Ю", "Х", "Ж", "Ц", "Ч", "Щ", "Ф", "Э"]
+        ],
+        wordsEn: [
+            "BUTTER",
+            "LOLLIPOP",
             "PIGEON",
             "REPTILE",
             "HAWK",
-            "CAPYBARA",
-            "DELICATE",
-            "OFFICIAL",
-            "ALIMONY",
-            "GRANOLA",
-            "IMPERATIVE",
-            "DELICIOUS",
-            "ANTICIPATION",
+            "SCOOTER",
+            "SANTA",
+            "PIZZA",
+            "ANIMAL",
+            "CHAIR",
+            "HORSE",
+            "CLOUD",
+            "CARROT",
             "APPLE",
             "BANANA",
-            "BILIOUS",
-            "INTESTINE",
-            "AMPLIFY"
+            "MONKEY",
+            "COMPUTER",
+            "GAME"
         ],
+        wordsRu: [
+            "СОБАКА",
+            "СЛОН",
+            "КОШКА",
+            "МОЛОКО",
+            "АВТОБУС",
+            "ШТАНЫ",
+            "КРОТ",
+            "МАГАЗИН",
+            "СОЛНЦЕ",
+            "ТРАКТОР",
+            "КАРАНДАШ",
+            "ОТКРЫТКА",
+            "КОНФЕТА",
+            "МЯЧ",
+            "НОС",
+            "ЛИСТ",
+            "РУКА",
+            "НЕБО",
+            "СИЛА",
+            "КАМЕНЬ",
+            "ЛОЖКА",
+                    ],
         // currentWord will be set to a random word from above list
         currentWord: "",
         // each element in this array is a letter in the word
@@ -73,7 +101,10 @@ var game = new Vue({
         gameOver: false,
         lose: false,
         message: "",
-        image: ""
+        image: "",
+        letters: "",
+        words: "",
+        lang: "Eng"
     },
     methods: {
         makeBlanks: function () {
@@ -110,10 +141,7 @@ var game = new Vue({
                     this.message = "You lose :(";
                     setTimeout( () =>loose_song.play(),500);
                     setTimeout( () => this.loseGame(),3000);
-
-
                 }
-
             }
         },
         loseGame: function() {
@@ -125,29 +153,41 @@ var game = new Vue({
 
         },
         playAgain: function() {
+            click.play();
             this.gameOver = true;
             setTimeout( () => this.restart(),1000);
         },
         restart: function () {
             this.lose = false;
             this.guesses = 10;
-             this.wordDivs.splice(0);
+            this.wordDivs.splice(0);
             this.currentWord = this.words[randomInteger(0, this.words.length - 1)];
             this.makeBlanks();
             this.gameOver = false;
             this.image = "./images/ladybug.gif";
             this.message = "Guess my word:"
 
+        },
+        changeLang: function (newLang) {
+            click.play();
+            if (newLang == "Eng") {
+                this.letters = this.lettersEn;
+                this.words = this.wordsEn;
+                this.lang = "Rus"
+            }
+            else {
+                this.letters = this.lettersRu;
+                this.words = this.wordsRu;
+                this.lang = "Eng"
+            }
+
         }
     },
 
     mounted: function () {
-        // this.lose = false;
-        // this.guesses = 10;
-        // this.gameOver = false;
-        // this.currentWord = this.words[randomInteger(0, this.words.length - 1)];
-        // this.makeBlanks();
-        // this.image = "./images/ladybug.gif"
+        lang = "Eng";
+        this.letters = this.lettersRu;
+        this.words = this.wordsRu;
         this.restart()
         }
 

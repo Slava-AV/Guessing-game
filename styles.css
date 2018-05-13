@@ -92,3 +92,27 @@ button:disabled {
   margin: 0 2px 2px 2px;
   width: 40px;
 }
+.block {
+    height: 150px;
+    text-align: center;
+    margin: 20px;
+}
+
+.block::before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -0.25em; /* Adjusts for spacing */
+
+    /*background: #808080; width: 5px;*/
+    }
+
+.centered {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.restart {
+    background-image: url("images/restart.png");
+}
