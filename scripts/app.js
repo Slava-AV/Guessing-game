@@ -4,8 +4,10 @@ if ('serviceWorker' in navigator) {
             .then(registration => console.log('Service Worker registered'))
             .catch(err => 'SW registration failed'));
 }
-var wrong = zounds.load("sounds/wrong.ogg");
+var correct = zounds.load("sounds/correct.ogg");
+    wrong = zounds.load("sounds/wrong.ogg");
     loose_song = zounds.load("sounds/loose.ogg");
+    win_song = zounds.load("sounds/win.ogg");
 
 // random integer helper function
 function randomInteger(min, max) {
@@ -89,7 +91,8 @@ var game = new Vue({
                         guessCorrect = true;
                     }
                 }
-                if (!guessCorrect) {wrong.play();}
+                if (guessCorrect) {correct.play();}
+                else {wrong.play();}
 
                 if (!this.wordDivs.some(function (value) {
                     return value == ""
@@ -97,6 +100,7 @@ var game = new Vue({
                     this.gameOver = true;
                     this.message = "You win!!!";
                     this.image = "./images/sheeps.gif";
+                    win_song.play();
                     //Win
                 }
                 else if (this.guesses==0) {
