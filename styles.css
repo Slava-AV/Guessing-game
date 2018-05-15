@@ -136,15 +136,15 @@ button:hover, .restart {
         animation-timing-function: ease-out;
     }
 
-    50% {
-        transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);
-        animation-timing-function: ease-in;
-    }
+    /*50% {*/
+        /*transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);*/
+        /*animation-timing-function: ease-in;*/
+    /*}*/
 
-    80% {
-        transform: perspective(400px) scale3d(.95, .95, .95);
-        animation-timing-function: ease-in;
-    }
+    /*80% {*/
+        /*transform: perspective(400px) scale3d(.95, .95, .95);*/
+        /*animation-timing-function: ease-in;*/
+    /*}*/
 
     to {
         transform: perspective(400px);
@@ -187,7 +187,7 @@ button:hover, .restart {
 }
 
 .rubberBand {
-    animation-name: rubberBand;
+    /*animation-name: rubberBand;*/
 }
 
 .keyboard-row button::after {
@@ -200,7 +200,6 @@ button:hover, .restart {
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    content: '';
     opacity: 0;
     pointer-events: none;
 }
