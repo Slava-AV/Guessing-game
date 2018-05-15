@@ -45,9 +45,10 @@ var game = new Vue({
             ["Z", "X", "C", "V", "B", "N", "M"]
         ],
         lettersRu:[
-        ["И", "Е", "Н", "А", "О", "Т", "Р", "С", "Л", "В","К","П"],
-        ["М", "У", "Д", "Я", "Ы", "Ь", "З", "Б", "Г","Б", "Г"],
-        ["Й", "Ч", "Ю", "Х", "Ж", "Ц", "Ч", "Ш", "Щ", "Ф", "Э"]
+            ["И", "Е", "Н", "А", "О", "Т", "Р", "С", "Л", "В","К"],
+            ["П", "М", "У", "Д", "Я", "Ы", "Ь", "З", "Б", "Г"],
+            ["Й", "Ю", "Х", "Ж", "Ц", "Ч", "Ш", "Щ", "Ф", "Э"]
+
         ],
         wordsEn: [
             "BUTTER",
@@ -159,7 +160,7 @@ var game = new Vue({
         },
         restart: function () {
             this.lose = false;
-            this.guesses = 10;
+            this.guesses = 15;
             this.wordDivs.splice(0);
             this.currentWord = this.words[randomInteger(0, this.words.length - 1)];
             this.makeBlanks();

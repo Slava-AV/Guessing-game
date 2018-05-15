@@ -18,7 +18,7 @@
 		<div id="word">
 			<div class="word-blankletter" v-for="letter in wordDivs" v-cloak>{{letter}}</div>
 		</div>
-        <h3>{{guesses}}</h3>
+        <h4>{{guesses}}</h4>
         <div id="keyboard">
 			<div class="keyboard-row">
 				<letter-button style="color:orangered" v-for="letter in letters[0]" :letter="letter" :lose="lose" :game-over="gameOver" :key="letter" @check="check(letter)" ></letter-button>
@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <button id="playagain" class="buttons-button"  @click="changeLang(lang)">{{lang}}</button>
+        <button style="margin-bottom: 10px;" id="playagain" class="buttons-button"  @click="changeLang(lang)">{{lang}}</button>
         </div>
 
 <!--<script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>-->

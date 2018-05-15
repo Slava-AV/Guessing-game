@@ -2,7 +2,7 @@ html, body {
   align-items: center;
   background-color: #F5F5F6;
   color: #333;
-  display: flex;
+  display: block;
   flex-direction: column;
   font-family: 'Roboto Medium', sans-serif;
   height: 100%;
@@ -35,6 +35,7 @@ button:disabled {
 #game {
   align-items: center;
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
   height: 100%;
   margin: 0;
@@ -53,7 +54,7 @@ button:disabled {
 
 .keyboard-row-letter {
   height: 40px;
-  width: 25px;
+  width: 28px;
 }
 
 .button-yellow{color: yellow !important;
@@ -93,7 +94,7 @@ button:disabled {
   width: 40px;
 }
 .block {
-    height: 100px;
+    /*height: 100px;*/
     text-align: center;
     margin: 20px;
 }
@@ -102,7 +103,7 @@ button:disabled {
     content: '';
     display: inline-block;
     height: 100%;
-    vertical-align: middle;
+    vertical-align: top;
     margin-right: -0.25em; /* Adjusts for spacing */
 
     /*background: #808080; width: 5px;*/
@@ -115,4 +116,21 @@ button:disabled {
 
 .restart {
     background-image: url("images/restart.png");
+}
+
+@media screen and (max-width : 370px)
+{
+    button
+    {
+        font-size:22px;
+    }
+    .keyboard-row-letter {
+        height: 35px;
+        width: 22px;
+    }
+    .word-blankletter {
+        height: 40px;
+        font-size: 35px;
+        width: 30px;
+
 }
