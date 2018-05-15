@@ -5,10 +5,10 @@ if ('serviceWorker' in navigator) {
             .catch(err => 'SW registration failed'));
 }
 var correct = zounds.load("sounds/correct.ogg");
-    wrong = zounds.load("sounds/wrong.ogg");
-    loose_song = zounds.load("sounds/loose.ogg");
-    win_song = zounds.load("sounds/win.ogg");
-    click = zounds.load("sounds/click.ogg");
+wrong = zounds.load("sounds/wrong.ogg");
+loose_song = zounds.load("sounds/loose.ogg");
+win_song = zounds.load("sounds/win.ogg");
+click = zounds.load("sounds/click.ogg");
 
 // random integer helper function
 function randomInteger(min, max) {
@@ -17,7 +17,7 @@ function randomInteger(min, max) {
 
 Vue.component("letter-button", {
     props: ["letter", "game-over", "lose"],
-    template: "<button class='keyboard-row-letter' :id='letter' :disabled='disabled' @click='clicked()'>{{ letter }}</button>",
+    template: "<button class='keyboard-row-letter animated' :id='letter' :disabled='disabled' @click='clicked()'>{{ letter }}</button>",
     data: function () {
         return {
             disabled: false
@@ -92,7 +92,7 @@ var game = new Vue({
             "СИЛА",
             "КАМЕНЬ",
             "ЛОЖКА",
-                    ],
+        ],
         // currentWord will be set to a random word from above list
         currentWord: "",
         // each element in this array is a letter in the word
@@ -105,7 +105,7 @@ var game = new Vue({
         image: "",
         letters: "",
         words: "",
-        lang: "Eng"
+        lang: "Eng",
     },
     methods: {
         makeBlanks: function () {
@@ -123,7 +123,9 @@ var game = new Vue({
                         guessCorrect = true;
                     }
                 }
-                if (guessCorrect) {correct.play();}
+                if (guessCorrect) {
+                    correct.play();
+                }
                 else {wrong.play();}
 
                 if (!this.wordDivs.some(function (value) {
@@ -140,6 +142,7 @@ var game = new Vue({
                     // loose message
                     this.gameOver = true;
                     this.message = "You lose :(";
+                    // this.image = "./images/lose.gif";
                     setTimeout( () =>loose_song.play(),500);
                     setTimeout( () => this.loseGame(),3000);
                 }
@@ -150,7 +153,7 @@ var game = new Vue({
                 if (this.wordDivs[i] == "") {
                     Vue.set(this.wordDivs, i, this.currentWord[i]);
                 }
-                }
+            }
 
         },
         playAgain: function() {
@@ -190,6 +193,6 @@ var game = new Vue({
         this.letters = this.lettersRu;
         this.words = this.wordsRu;
         this.restart()
-        }
+    }
 
 });

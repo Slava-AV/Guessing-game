@@ -1,48 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <link rel="manifest" href="/akimguessinggame/manifest.json">
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <script src="scripts/zounds.min.js"></script>
     <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
-	<div id="game">
-        <img style="margin-top: 10px;" v-bind:src="image" />
-		<!--<h3>{{ message }}</h3>-->
-		<div id="word">
-			<div class="word-blankletter" v-for="letter in wordDivs" v-cloak>{{letter}}</div>
-		</div>
-        <h4>{{guesses}}</h4>
-        <div id="keyboard">
-			<div class="keyboard-row">
-				<letter-button style="color:orangered" v-for="letter in letters[0]" :letter="letter" :lose="lose" :game-over="gameOver" :key="letter" @check="check(letter)" ></letter-button>
-			</div>
-            <div class="keyboard-row">
-                <letter-button style="color:dodgerblue" v-for="letter in letters[1]" :letter="letter" :game-over="gameOver" :key="letter" @check="check(letter)" v-cloak></letter-button>
-            </div>
-            <div class="keyboard-row">
-                <letter-button style="color:steelblue" v-for="letter in letters[2]" :letter="letter" :game-over="gameOver" :key="letter" @check="check(letter)" v-cloak></letter-button>
-            </div>
-		</div>
-        <div class="block">
-            <div class="centered">
-                <!--<button id="playagain" class="buttons-button restart" @click="playAgain">Restart</button>-->
-                <img src="images/restart.png" alt="restart" height="40" width="40" @click="playAgain" />
-            </div>
+<div id="game">
+
+    <div class="restart" @click="playAgain">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+    </div>
+    <div class="menu-left">
+        <button id="playagain" @click="changeLang(lang)">{{lang}}</button>
+    </div>
+
+
+    <img class="image-fun animated" :class="{ rubberBand: gameOver }" v-bind:src="image" />
+    <!--<h3>{{ message }}</h3>-->
+    <div id="word">
+
+        <div
+                class=""
+                v-for="letter in wordDivs"
+                v-cloak >
+            <template v-if="letter">
+                        <span class="word-blankletter animated flip">
+                            {{letter}}
+                        </span>
+            </template>
+            <template v-else>
+                        <span class="word-blankletter">
+                            {{letter}}
+                        </span>
+            </template>
         </div>
 
-        <button style="margin-bottom: 10px;" id="playagain" class="buttons-button"  @click="changeLang(lang)">{{lang}}</button>
+    </div>
+    <div class="counter">{{guesses}}</div>
+    <div id="keyboard">
+        <div class="keyboard-row">
+            <letter-button style="color:orangered" v-for="letter in letters[0]" :letter="letter" :lose="lose" :game-over="gameOver" :key="letter" @check="check(letter)" ></letter-button>
         </div>
+        <div class="keyboard-row">
+            <letter-button style="color:dodgerblue" v-for="letter in letters[1]" :letter="letter" :game-over="gameOver" :key="letter" @check="check(letter)" v-cloak></letter-button>
+        </div>
+        <div class="keyboard-row">
+            <letter-button style="color:steelblue" v-for="letter in letters[2]" :letter="letter" :game-over="gameOver" :key="letter" @check="check(letter)" v-cloak></letter-button>
+        </div>
+    </div>
+
+</div>
 
 <!--<script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>-->
 <script type="text/javascript" src="scripts/app.js"></script>
 
 </body>
-
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </html>
