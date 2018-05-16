@@ -1,79 +1,82 @@
-var dataCacheName = 'ggame-1';
-var cacheName = 'ggame-pwa';
-var filesToCache = [
+//This is the service worker with the Cache-first network
+
+var CACHE = 'pwabuilder-precache';
+var precacheFiles = [
+    /* Add an array of files to precache for your app */
     './',
     './index.html',
     './scripts/app.js',
     './styles.css',
     './images/ladybug.gif',
     './images/sheeps.gif',
-    'https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js'
+    'https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js',
+    './sounds/correct.ogg',
+    './sounds/wrong.ogg',
+    './sounds/win.ogg',
+    './sounds/loose.ogg',
+    './sounds/click.ogg',
+    './scripts/zounds.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css',
+    './images/icons/icon-144x144.png',
+    './manifest.json'
+
+
 ];
 
-self.addEventListener('install', function(e) {
-    console.log('[ServiceWorker] Install');
-    e.waitUntil(
-        caches.open(cacheName).then(function(cache) {
-            console.log('[ServiceWorker] Caching app shell');
-            return cache.addAll(filesToCache);
+//Install stage sets up the cache-array to configure pre-cache content
+self.addEventListener('install', function(evt) {
+    console.log('The service worker is being installed.');
+    evt.waitUntil(precache().then(function() {
+            console.log('[ServiceWorker] Skip waiting on install');
+            return self.skipWaiting();
+
         })
     );
 });
 
-self.addEventListener('activate', function(e) {
-    console.log('[ServiceWorker] Activate');
-    e.waitUntil(
-        caches.keys().then(function(keyList) {
-            return Promise.all(keyList.map(function(key) {
-                if (key !== cacheName && key !== dataCacheName) {
-                    console.log('[ServiceWorker] Removing old cache', key);
-                    return caches.delete(key);
-                }
-            }));
-        })
-    );
-    /*
-     * Fixes a corner case in which the app wasn't returning the latest data.
-     * You can reproduce the corner case by commenting out the line below and
-     * then doing the following steps: 1) load app for first time so that the
-     * initial New York City data is shown 2) press the refresh button on the
-     * app 3) go offline 4) reload the app. You expect to see the newer NYC
-     * data, but you actually see the initial data. This happens because the
-     * service worker is not yet activated. The code below essentially lets
-     * you activate the service worker faster.
-     */
+
+//allow sw to control of current page
+self.addEventListener('activate', function(event) {
+    console.log('[ServiceWorker] Claiming clients for current page');
     return self.clients.claim();
+
 });
 
-self.addEventListener('fetch', function(e) {
-    console.log('[Service Worker] Fetch', e.request.url);
-    var dataUrl = 'https://s3.ap-south-1.amazonaws.com/akimguessinggame/index.html';
-    if (e.request.url.indexOf(dataUrl) > -1) {
-        /*
-         * When the request URL contains dataUrl, the app is asking for fresh
-         * weather data. In this case, the service worker always goes to the
-         * network and then caches the response. This is called the "Cache then
-         * network" strategy:
-         * https://jakearchibald.com/2014/offline-cookbook/#cache-then-network
-         */
-        e.respondWith(
-            caches.open(dataCacheName).then(function(cache) {
-                return fetch(e.request).then(function(response){
-                    cache.put(e.request.url, response.clone());
-                    return response;
-                });
-            })
-        );
-    } else {
-        /*
-         * The app is asking for app shell files. In this scenario the app uses the
-         * "Cache, falling back to the network" offline strategy:
-         * https://jakearchibald.com/2014/offline-cookbook/#cache-falling-back-to-network
-         */
-        e.respondWith(
-            caches.match(e.request).then(function(response) {
-                return response || fetch(e.request);
-            })
-        );
-    }
+self.addEventListener('fetch', function(evt) {
+    console.log('The service worker is serving the asset.'+ evt.request.url);
+    evt.respondWith(fromCache(evt.request).catch(fromServer(evt.request)));
+    evt.waitUntil(update(evt.request));
 });
+
+
+function precache() {
+    return caches.open(CACHE).then(function (cache) {
+        return cache.addAll(precacheFiles);
+    });
+}
+
+
+function fromCache(request) {
+    //we pull files from the cache first thing so we can show them fast
+    return caches.open(CACHE).then(function (cache) {
+        return cache.match(request).then(function (matching) {
+            return matching || Promise.reject('no-match');
+        });
+    });
+}
+
+
+function update(request) {
+    //this is where we call the server to get the newest version of the
+    //file to use the next time we show view
+    return caches.open(CACHE).then(function (cache) {
+        return fetch(request).then(function (response) {
+            return cache.put(request, response);
+        });
+    });
+}
+
+function fromServer(request){
+    //this is the fallback if it is not in the cahche to go to the server and get it
+    return fetch(request).then(function(response){ return response})
+}
