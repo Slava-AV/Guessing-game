@@ -9,14 +9,14 @@ var precacheFiles = [
     './styles.css',
     './images/ladybug.gif',
     './images/sheeps.gif',
-    'https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js',
+    'https://cdn.jsdelivr.net/npm/vue',
     './sounds/correct.ogg',
     './sounds/wrong.ogg',
     './sounds/win.ogg',
     './sounds/loose.ogg',
     './sounds/click.ogg',
     './scripts/zounds.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css',
+   // 'https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css',
     './images/icons/icon-144x144.png',
     './manifest.json'
 
